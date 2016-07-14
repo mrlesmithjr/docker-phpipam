@@ -21,6 +21,11 @@ COPY 000-default.conf /etc/apache2/sites-available/default
 # Copy phpIPAM configuration
 COPY config.php /var/www/html
 
+# Copy cron jobs
+COPY phpipam_discoveryCheck /etc/cron.d
+COPY phpipam_pingCheck /etc/cron.d
+COPY phpipam_resolveIPaddresses /etc/cron.d
+
 RUN a2enmod rewrite
 
 # Apache environment vars

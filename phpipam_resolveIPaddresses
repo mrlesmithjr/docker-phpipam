@@ -1,0 +1,1 @@
+0 * * * * www-data /usr/bin/php /var/www/html/functions/scripts/resolveIPaddresses.php
