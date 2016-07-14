@@ -1,0 +1,28 @@
+version: '2'
+services:
+  db:
+    image: mysql:5.7
+    volumes:
+      - "./.data/db:/var/lib/mysql"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: phpipam
+      MYSQL_DATABASE: phpipam
+      MYSQL_USER: phpipam
+      MYSQL_PASSWORD: phpipam
+
+  phpipam:
+    depends_on:
+      - db
+    image: mrlesmithjr/docker-phpipam:latest
+    links:
+      - db
+    ports:
+      - "8000:80"
+    restart: always
+    environment:
+      MYSQL_DB_HOSTNAME: db
+      MYSQL_DB_USERNAME: phpipam
+      MYSQL_DB_PASSWORD: phpipam
+      MYSQL_DB_NAME: phpipam
+      MYSQL_DB_PORT: 3306
