@@ -1,7 +1,7 @@
 version: '2'
 services:
   db:
-    image: mysql:5.7
+    image: mrlesmithjr/mysql:latest
     volumes:
       - "./.data/db:/var/lib/mysql"
     restart: always
@@ -11,7 +11,7 @@ services:
       MYSQL_USER: phpipam
       MYSQL_PASSWORD: phpipam
 
-  phpipam:
+  web:
     depends_on:
       - db
     image: mrlesmithjr/docker-phpipam:latest

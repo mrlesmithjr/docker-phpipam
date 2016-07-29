@@ -4,11 +4,16 @@ MAINTAINER Larry Smith Jr. <mrlesmithjr@gmail.com>
 
 # Update apt-cache and install Apache
 RUN apt-get update && \
-    apt-get -y install apache2 cron libapache2-mod-php5 mysql-client php5-mysql php5-gmp php5-ldap php-pear unzip && \
+    apt-get -y install apache2 cron libapache2-mod-php5 mysql-client \
+    php5-mysql php5-gmp php5-ldap php-pear unzip && \
     apt-get -y clean && \
     apt-get -y autoremove && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
     rm -rf /var/www/html
+
+# Install dumb-init
+RUN wget https://github.com/Yelp/dumb-init/releases/download/v1.1.2/dumb-init_1.1.2_amd64.deb
+RUN dpkg -i dumb-init_*.deb
 
 # Download and extract phpIPAM
 ADD https://github.com/phpipam/phpipam/archive/master.zip /tmp
@@ -42,6 +47,7 @@ ENV PROXY_ENABLED false
 # Expose port(s)
 EXPOSE 80 443
 
-ENTRYPOINT ["apache2ctl"]
+#ENTRYPOINT ["apache2ctl"]
 
-CMD ["-D", "FOREGROUND"]
+#CMD ["-D", "FOREGROUND"]
+CMD ['/usr/bin/dumb-init', '/usr/sbin/apache2ctl', '-D', 'FOREGROUND']

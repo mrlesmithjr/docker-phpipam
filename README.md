@@ -15,7 +15,7 @@ Spin up phpIPAM environment using the included `docker-compose.yml`.
 version: '2'
 services:
   db:
-    image: mysql:5.7
+    image: mrlesmithjr/mysql:latest
     volumes:
       - "./.data/db:/var/lib/mysql"
     restart: always
@@ -25,7 +25,7 @@ services:
       MYSQL_USER: phpipam
       MYSQL_PASSWORD: phpipam
 
-  phpipam:
+  web:
     depends_on:
       - db
     image: mrlesmithjr/docker-phpipam:latest
@@ -41,6 +41,7 @@ services:
       MYSQL_DB_NAME: phpipam
       MYSQL_DB_PORT: 3306
 ```
+
 Spin up the environment with `docker-compose up -d`
 
 Once complete if you run `docker ps` you should see similar to below:
@@ -53,7 +54,7 @@ a132a22c6a49        mysql:5.7                           "docker-entrypoint.sh"  
 One thing that is left which still needs work is the phpIPAM DB schema but we
 can handle that with the below:
 ```
-docker exec -it dockerphpipam_phpipam_1 bash -c "mysql -u root -p -h db phpipam < /var/www/html/db/SCHEMA.sql"
+docker exec -it dockerphpipam_web_1 bash -c "mysql -u phpipam -p -h db phpipam < /var/www/html/db/SCHEMA.sql"
 ```
 When prompted for password enter `phpipam` and the DB will be populated.  
 Now open up your browser of choice and connect to http://127.0.0.1:8000 and
