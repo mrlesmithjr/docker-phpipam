@@ -12,8 +12,8 @@ RUN apt-get update && \
     rm -rf /var/www/html
 
 # Install dumb-init
-ADD https://github.com/Yelp/dumb-init/releases/download/v1.1.2/dumb-init_1.1.2_amd64.deb /tmp
-RUN dpkg -i /tmp/dumb-init_1.1.2_amd64.deb
+#ADD https://github.com/Yelp/dumb-init/releases/download/v1.1.2/dumb-init_1.1.2_amd64.deb /tmp
+#RUN dpkg -i /tmp/dumb-init_1.1.2_amd64.deb
 
 # Download and extract phpIPAM
 ADD https://github.com/phpipam/phpipam/archive/master.zip /tmp
@@ -47,7 +47,7 @@ ENV PROXY_ENABLED false
 # Expose port(s)
 EXPOSE 80 443
 
-#ENTRYPOINT ["apache2ctl"]
+ENTRYPOINT ["apache2ctl"]
 
-#CMD ["-D", "FOREGROUND"]
-CMD ['/usr/bin/dumb-init', '/usr/sbin/apache2ctl', '-D', 'FOREGROUND']
+CMD ["-D", "FOREGROUND"]
+#CMD ['/usr/bin/dumb-init', '/usr/sbin/apache2ctl', '-D', 'FOREGROUND']
