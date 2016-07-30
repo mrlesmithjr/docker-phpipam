@@ -12,8 +12,8 @@ RUN apt-get update && \
     rm -rf /var/www/html
 
 # Install dumb-init
-RUN wget https://github.com/Yelp/dumb-init/releases/download/v1.1.2/dumb-init_1.1.2_amd64.deb
-RUN dpkg -i dumb-init_*.deb
+ADD https://github.com/Yelp/dumb-init/releases/download/v1.1.2/dumb-init_1.1.2_amd64.deb /tmp
+RUN dpkg -i /tmp/dumb-init_1.1.2_amd64.deb
 
 # Download and extract phpIPAM
 ADD https://github.com/phpipam/phpipam/archive/master.zip /tmp
