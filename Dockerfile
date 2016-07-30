@@ -5,7 +5,7 @@ MAINTAINER Larry Smith Jr. <mrlesmithjr@gmail.com>
 # Update apt-cache and install Apache
 RUN apt-get update && \
     apt-get -y install apache2 cron libapache2-mod-php5 mysql-client \
-    php5-mysql php5-gmp php5-ldap php-pear unzip && \
+    php5-gd php5-mysql php5-gmp php5-ldap php-pear unzip && \
     apt-get -y clean && \
     apt-get -y autoremove && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
