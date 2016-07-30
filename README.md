@@ -1,15 +1,15 @@
 docker-phpipam
 --------------
 
-Builds docker image to run [phpIPAM] container with persistent data.  
+Builds [Docker] image to run [phpIPAM] container with persistent data.  
 
 Requirements
 ------------
 
-A working Docker setup.  
+A working [Docker] setup.  
 
 ## How-To
-Spin up phpIPAM environment using the included `docker-compose.yml`.  
+Spin up [phpIPAM] environment using the included `docker-compose.yml`.  
 
 ```
 version: '2'
@@ -48,10 +48,10 @@ Once complete if you run `docker ps` you should see similar to below:
 
 ```
 CONTAINER ID        IMAGE                               COMMAND                  CREATED             STATUS              PORTS                           NAMES
-2b74b05e3362        mrlesmithjr/docker-phpipam:latest   "apache2ctl -D FOREGR"   10 seconds ago      Up 9 seconds        443/tcp, 0.0.0.0:8000->80/tcp   dockerphpipam_phpipam_1
-a132a22c6a49        mysql:5.7                           "docker-entrypoint.sh"   11 seconds ago      Up 10 seconds       3306/tcp                        dockerphpipam_db_1
+2446630340d9        mrlesmithjr/docker-phpipam:latest   "apache2ctl -D FOREGR"   43 minutes ago      Up 43 minutes       443/tcp, 0.0.0.0:8000->80/tcp   dockerphpipam_web_1
+1082d5b687b0        mrlesmithjr/mysql:latest            "docker-entrypoint.sh"   3 hours ago         Up 43 minutes       3306/tcp                        dockerphpipam_db_1
 ```
-One thing that is left which still needs work is the phpIPAM DB schema but we
+One thing that is left which still needs work is the [phpIPAM] DB schema but we
 can handle that with the below:
 ```
 docker exec -it dockerphpipam_web_1 bash -c "mysql -u phpipam -p -h db phpipam < /var/www/html/db/SCHEMA.sql"
@@ -63,4 +63,23 @@ password.
 
 And you are now good to go to begin using [phpIPAM].
 
+Notes
+-----
+I was not able to get cron jobs to run as desired
+however you can execute the following manually for example or schedule them to run from your [Docker] host.
+
+`Discover hosts`
+```
+docker exec -it dockerphpipam_web_1 /usr/bin/php /var/www/html/functions/scripts/discoveryCheck.php
+```
+`Resolve IP addresses`
+```
+docker exec -it dockerphpipam_web_1 /usr/bin/php /var/www/html/functions/scripts/resolveIPaddresses.php
+```
+`Ping check`
+```
+docker exec -it dockerphpipam_web_1 /usr/bin/php /var/www/html/functions/scripts/pingCheck.php
+```
+
 [phpIPAM]: <http://phpipam.net>
+[Docker]: <http://docker.com>
