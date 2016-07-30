@@ -21,7 +21,7 @@ RUN unzip /tmp/master.zip -d /var/www
 RUN mv /var/www/phpipam-master /var/www/html
 
 # Copy default site
-COPY 000-default.conf /etc/apache2/sites-available/default
+COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
 
 # Copy phpIPAM configuration
 COPY config.php /var/www/html
