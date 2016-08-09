@@ -17,7 +17,7 @@ services:
   db:
     image: mrlesmithjr/mysql:latest
     volumes:
-      - "./.data/db:/var/lib/mysql"
+      - "db:/var/lib/mysql"
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: phpipam
@@ -40,6 +40,9 @@ services:
       MYSQL_DB_PASSWORD: phpipam
       MYSQL_DB_NAME: phpipam
       MYSQL_DB_PORT: 3306
+
+volumes:
+  db:
 ```
 
 Spin up the environment with `docker-compose up -d`
@@ -79,6 +82,33 @@ docker exec -it dockerphpipam_web_1 /usr/bin/php /var/www/html/functions/scripts
 `Ping check`
 ```
 docker exec -it dockerphpipam_web_1 /usr/bin/php /var/www/html/functions/scripts/pingCheck.php
+```
+If you spin this up using `docker-compose` then you will have a persistent data
+volume that gets created to ensure that your data remains. The data volume is
+created as a name so it is easier to find and will always be mapped to the same
+volume. By default this will be named as the project name_db. So for example:
+`dockerphpipam_db`.
+You can view/inspect this volume by:
+```
+docker volume inspect dockerphpipam_db
+```
+```
+[
+    {
+        "Name": "dockerphpipam_db",
+        "Driver": "local",
+        "Mountpoint": "/var/lib/docker/volumes/dockerphpipam_db/_data",
+        "Labels": null,
+        "Scope": "local"
+    }
+]
+```
+And if you were to have spun this up previously when the data volume was `./data`
+then you can easily migrate your existing data by doing the following (using above
+example) in the project folder:
+```
+sudo su
+sudo cp -r ./data/. /var/lib/docker/volumes/dockerphpipam_db/_data
 ```
 
 [phpIPAM]: <http://phpipam.net>
