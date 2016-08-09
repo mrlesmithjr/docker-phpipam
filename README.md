@@ -103,12 +103,12 @@ docker volume inspect dockerphpipam_db
     }
 ]
 ```
-And if you were to have spun this up previously when the data volume was `./data`
+And if you were to have spun this up previously when the data volume was `./.data`
 then you can easily migrate your existing data by doing the following (using above
 example) in the project folder:
 ```
 sudo su
-sudo cp -r ./data/. /var/lib/docker/volumes/dockerphpipam_db/_data
+sudo cp -r ./.data/. /var/lib/docker/volumes/dockerphpipam_db/_data
 ```
 
 [phpIPAM]: <http://phpipam.net>
