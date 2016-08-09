@@ -3,7 +3,7 @@ services:
   db:
     image: mrlesmithjr/mysql:latest
     volumes:
-      - "./.data/db:/var/lib/mysql"
+      - "db:/var/lib/mysql"
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: phpipam
@@ -26,3 +26,6 @@ services:
       MYSQL_DB_PASSWORD: phpipam
       MYSQL_DB_NAME: phpipam
       MYSQL_DB_PORT: 3306
+
+volumes:
+  db:
