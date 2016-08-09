@@ -108,7 +108,7 @@ then you can easily migrate your existing data by doing the following (using abo
 example) in the project folder:
 ```
 sudo su
-sudo cp -r ./.data/. /var/lib/docker/volumes/dockerphpipam_db/_data
+sudo cp -r ./.data/db/. /var/lib/docker/volumes/dockerphpipam_db/_data
 ```
 
 [phpIPAM]: <http://phpipam.net>
