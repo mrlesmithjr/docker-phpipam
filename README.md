@@ -111,5 +111,32 @@ sudo su
 sudo cp -r ./.data/db/. /var/lib/docker/volumes/dockerphpipam_db/_data
 ```
 
+Backing up DB data
+------------------
+If you find yourself in need of backing up your DB data in order to migrate to
+another host or just to backup the data in general. You can do that as simple as
+below:
+* Requirements
+  * Destination mountpoint to backup to `/backups`
+
+We will use the method of backing up using the `--volumes-from` [Docker] volume
+option. This process will spin up a temporary container, mount the
+`/var/lib/mysql` folder, and then back it all up to a `tar.gz` file in our
+`/backups` folder.
+```
+docker run --rm --volumes-from dockerphpipam_db_1 \
+-v /backups:/backup ubuntu tar cvzf /backup/dockerphpipam_db_1.backup.tar.gz \
+/var/lib/mysql
+```
+And to validate that the backup exists:
+```
+ll /backups
+total 550
+drwxrwxrwx  2 root root      3 Aug 11 01:01 ./
+drwxr-xr-x 24 root root   4096 Aug 11 00:47 ../
+-rw-r--r--  1 root root 811475 Aug 11 01:01 dockerphpipam_db_1.backup.tar.gz
+```
+Now you can copy/move that anywhere and extract it with all of your data intact.
+
 [phpIPAM]: <http://phpipam.net>
 [Docker]: <http://docker.com>
