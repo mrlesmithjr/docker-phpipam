@@ -2,6 +2,8 @@ FROM debian:jessie
 
 MAINTAINER Larry Smith Jr. <mrlesmithjr@gmail.com>
 
+ARG PHPIPAM_VERSION="1.3.2"
+
 # Update apt-cache and install Apache
 RUN apt-get update && \
     apt-get -y install apache2 cron libapache2-mod-php5 mysql-client \
@@ -17,9 +19,9 @@ RUN apt-get update && \
 #RUN dpkg -i /tmp/dumb-init_1.1.2_amd64.deb
 
 # Download and extract phpIPAM
-ADD https://github.com/phpipam/phpipam/archive/master.zip /tmp
-RUN unzip /tmp/master.zip -d /var/www
-RUN mv /var/www/phpipam-master /var/www/html
+ADD https://github.com/phpipam/phpipam/archive/phpipam-${PHPIPAM_VERSION}.zip /tmp
+RUN unzip /tmp/phpipam-${PHPIPAM_VERSION}.zip -d /var/www
+RUN mv /var/www/phpipam-${PHPIPAM_VERSION} /var/www/html
 
 # Copy default site
 COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
